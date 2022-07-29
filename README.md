@@ -23,6 +23,13 @@ Goblins collecting items (full-stack app).
 1. `heroku config` to get DATABASE_URL
 1. Add DATABASE_URL to .env file
 
+### Testing
+
+1. `npm install jest --save-dev`
+1. Update test script in package.json to use jest
+1. `npm install supertest --save-dev`
+1. Add `"module": true` to eslintrc file
+
 ## Notes
 
 1. Linter
