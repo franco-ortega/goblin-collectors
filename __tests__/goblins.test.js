@@ -1,4 +1,6 @@
 const fs = require('fs');
+const { request } = require('http');
+const app = require('../lib/app');
 const pool = require('../lib/utils/pool');
 
 describe('Goblin endpoint tests', () => {
@@ -6,11 +8,18 @@ describe('Goblin endpoint tests', () => {
 
   afterAll(() => pool.end());
 
-  it('creates a fake test', async () => {
-    const fake = 'FAKE';
+  it('creates a goblin', async () => {
+    const response = await request(app).post('/api/v1/goblins').send({
+      goblinName: 'Veresh',
+      strength: 3,
+      storage: 'medium'
+    });
 
-    console.log(fake);
-
-    expect(true).toEqual(true);
+    expect(response.body).toEqual({
+      id: '1',
+      goblinName: 'Veresh',
+      strength: 3,
+      storage: 'medium'
+    });
   });
 });
