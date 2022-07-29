@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS goblins;
+
+CREATE TABLE goblins(
+  goblin_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  goblin_name TEXT NOT NULL,
+  strength INT NOT NULL,
+  storage TEXT NOT NULL
+);
