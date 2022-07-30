@@ -1,4 +1,6 @@
 const fs = require('fs');
+const request = require('supertest');
+const app = require('../lib/app');
 const pool = require('../lib/utils/pool');
 
 describe('Goblin endpoint tests', () => {
@@ -6,11 +8,49 @@ describe('Goblin endpoint tests', () => {
 
   afterAll(() => pool.end());
 
-  it('creates a fake test', async () => {
-    const fake = 'FAKE';
+  it('creates a goblin', async () => {
+    const response = await request(app).post('/api/v1/goblins').send({
+      goblinName: 'Veresh',
+      strength: 3,
+      storage: 'medium'
+    });
 
-    console.log(fake);
+    expect(response.body).toEqual({
+      goblinId: '1',
+      goblinName: 'Veresh',
+      strength: 3,
+      storage: 'medium'
+    });
+  });
 
-    expect(true).toEqual(true);
+  it('gets all goblins', async () => {
+    await request(app).post('/api/v1/goblins').send({
+      goblinName: 'Veresh',
+      strength: 3,
+      storage: 'medium'
+    });
+
+    await request(app).post('/api/v1/goblins').send({
+      goblinName: 'Vida',
+      strength: 4,
+      storage: 'large'
+    });
+
+    const response = await request(app).get('/api/v1/goblins');
+
+    expect(response.body).toEqual([
+      {
+        goblinId: '1',
+        goblinName: 'Veresh',
+        strength: 3,
+        storage: 'medium'
+      },
+      {
+        goblinId: '2',
+        goblinName: 'Vida',
+        strength: 4,
+        storage: 'large'
+      }
+    ]);
   });
 });
