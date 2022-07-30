@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { request } = require('http');
+const request = require('supertest');
 const app = require('../lib/app');
 const pool = require('../lib/utils/pool');
 
@@ -16,7 +16,7 @@ describe('Goblin endpoint tests', () => {
     });
 
     expect(response.body).toEqual({
-      id: '1',
+      goblinId: '1',
       goblinName: 'Veresh',
       strength: 3,
       storage: 'medium'
