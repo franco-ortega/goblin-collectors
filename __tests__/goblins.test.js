@@ -57,4 +57,16 @@ describe('Goblin endpoint tests', () => {
       storage: 'large'
     });
   });
+
+  it('deletes a goblin', async () => {
+    const goblin = await Goblin.insert({
+      goblinName: 'Veresh',
+      strength: 3,
+      storage: 'medium'
+    });
+
+    const res = await request(app).delete(`${goblinUrl}/${goblin.goblinId}`);
+
+    expect(res.body).toEqual(goblin);
+  });
 });
