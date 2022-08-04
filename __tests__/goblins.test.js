@@ -66,12 +66,6 @@ describe('Goblin endpoint tests', () => {
       storage: 'medium'
     });
 
-    await Goblin.insert({
-      goblinName: 'Veresh2',
-      strength: 3,
-      storage: 'medium'
-    });
-
     const res = await request(app).delete(`${goblinUrl}/${goblin.goblinId}`);
 
     console.log(goblin);
