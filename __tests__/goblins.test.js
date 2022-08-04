@@ -25,17 +25,12 @@ describe('Goblin endpoint tests', () => {
   });
 
   it('gets all goblins', async () => {
-    await request(app).post('/api/v1/goblins').send({
-      goblinName: 'Veresh',
-      strength: 3,
-      storage: 'medium'
-    });
-
-    await request(app).post('/api/v1/goblins').send({
-      goblinName: 'Vida',
-      strength: 4,
-      storage: 'large'
-    });
+    const goblins = await Promise.all(
+      [
+        { goblinName: 'Veresh', strength: 3, storage: 'medium' },
+        { goblinName: 'Vida', strength: 4, storage: 'large' }
+      ].map((goblin) => Goblin.insert(goblin))
+    );
 
     const response = await request(app).get('/api/v1/goblins');
 
