@@ -61,7 +61,7 @@ describe('Goblin endpoint tests', () => {
       storage: 'medium'
     });
 
-    const update = (await request(app).put('/api/v1/goblins')).setEncoding({
+    const update = await request(app).put('/api/v1/goblins').send({
       goblinName: 'Veresh',
       strength: 5,
       storage: 'large'
