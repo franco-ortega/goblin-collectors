@@ -26,17 +26,17 @@ describe('Goblin endpoint tests', () => {
   it('gets all goblins', async () => {
     const goblins = await Promise.all(
       [
-        { goblinName: 'Veresh', strength: 3, storage: 'medium' },
-        { goblinName: 'Vida', strength: 4, storage: 'large' }
+        { goblinName: 'Vida1', strength: 1, storage: 'medium' },
+        { goblinName: 'Vida2', strength: 2, storage: 'large' },
+        { goblinName: 'Vida3', strength: 3, storage: 'large' },
+        { goblinName: 'Vida4', strength: 4, storage: 'large' },
+        { goblinName: 'Vida5', strength: 5, storage: 'large' }
       ].map((goblin) => Goblin.insert(goblin))
     );
 
     const response = await request(app).get(goblinUrl);
 
-    expect(response.body).toEqual([
-      { goblinId: '1', goblinName: 'Veresh', strength: 3, storage: 'medium' },
-      { goblinId: '2', goblinName: 'Vida', strength: 4, storage: 'large' }
-    ]);
+    expect(response.body).toEqual(expect.arrayContaining(goblins));
   });
 
   it('updates a goblin', async () => {
