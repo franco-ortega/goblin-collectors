@@ -11,11 +11,11 @@ describe('Goblin endpoint tests', () => {
   afterAll(() => pool.end());
 
   it('creates a goblin', async () => {
-    const response = await request(app)
+    const res = await request(app)
       .post(goblinUrl)
       .send({ goblinName: 'Veresh', strength: 3, storage: 'medium' });
 
-    expect(response.body).toEqual({
+    expect(res.body).toEqual({
       goblinId: '1',
       goblinName: 'Veresh',
       strength: 3,
@@ -34,9 +34,10 @@ describe('Goblin endpoint tests', () => {
       ].map((goblin) => Goblin.insert(goblin))
     );
 
-    const response = await request(app).get(goblinUrl);
+    const res = await request(app).get(goblinUrl);
 
-    expect(response.body).toEqual(expect.arrayContaining(goblins));
+    expect(res.body).toEqual(expect.arrayContaining(goblins));
+    expect(res.body).toHaveLength(goblins.length);
   });
 
   it('updates a goblin', async () => {
