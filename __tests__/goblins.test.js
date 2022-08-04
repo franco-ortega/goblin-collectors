@@ -55,20 +55,22 @@ describe('Goblin endpoint tests', () => {
   });
 
   it('updates a goblin', async () => {
-    await request(app).post('/api/v1/goblins').send({
+    const goblin = await request(app).post('/api/v1/goblins').send({
       goblinName: 'Veresh',
       strength: 3,
       storage: 'medium'
     });
 
-    const update = await request(app).put('/api/v1/goblins').send({
-      goblinName: 'Veresh',
-      strength: 5,
-      storage: 'large'
-    });
+    const res = await request(app)
+      .put(`/api/v1/goblins/${goblin.body.goblinId}`)
+      .send({
+        goblinName: 'Veresh',
+        strength: 5,
+        storage: 'large'
+      });
 
-    expect(update).toEqual({
-      id: '1',
+    expect(res.body).toEqual({
+      goblinId: '1',
       goblinName: 'Veresh',
       strength: 5,
       storage: 'large'
