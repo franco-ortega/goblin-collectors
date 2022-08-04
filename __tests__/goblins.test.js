@@ -1,6 +1,7 @@
 const fs = require('fs');
 const request = require('supertest');
 const app = require('../lib/app');
+const Goblin = require('../lib/models/Goblin');
 const pool = require('../lib/utils/pool');
 
 describe('Goblin endpoint tests', () => {
@@ -55,14 +56,14 @@ describe('Goblin endpoint tests', () => {
   });
 
   it('updates a goblin', async () => {
-    const goblin = await request(app).post('/api/v1/goblins').send({
+    const goblin = await Goblin.insert({
       goblinName: 'Veresh',
       strength: 3,
       storage: 'medium'
     });
 
     const res = await request(app)
-      .put(`/api/v1/goblins/${goblin.body.goblinId}`)
+      .put(`/api/v1/goblins/${goblin.goblinId}`)
       .send({
         goblinName: 'Veresh',
         strength: 5,
