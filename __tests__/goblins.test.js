@@ -8,7 +8,10 @@ describe('Goblin endpoint tests', () => {
   const goblinUrl = '/api/v1/goblins';
 
   beforeEach(() => pool.query(fs.readFileSync('./sql/database.sql', 'utf-8')));
-  afterAll(() => pool.end());
+  afterAll(async () => {
+    await pool.query(fs.readFileSync('./sql/database.sql', 'utf-8'));
+    pool.end();
+  });
 
   it('creates a goblin', async () => {
     const res = await request(app)
